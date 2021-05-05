@@ -1,0 +1,9 @@
+target/
+*.pdf
+*.tiff
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
