@@ -17,11 +17,14 @@
 package org.sral.nifi.processors.pdf2tiff;
 
 import org.apache.nifi.annotation.behavior.EventDriven;
+import org.apache.nifi.annotation.behavior.Restricted;
+import org.apache.nifi.annotation.behavior.Restriction;
 import org.apache.nifi.annotation.behavior.SideEffectFree;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.components.RequiredPermission;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.*;
 import org.apache.nifi.processor.exception.ProcessException;
@@ -30,6 +33,16 @@ import org.apache.nifi.processor.util.StandardValidators;
 import java.io.File;
 import java.util.*;
 
+@Restricted(
+        restrictions = {
+                @Restriction(
+                        requiredPermission = RequiredPermission.READ_FILESYSTEM,
+                        explanation = "Needed for temporary caching on the file system during rendering."),
+                @Restriction(
+                        requiredPermission = RequiredPermission.WRITE_FILESYSTEM,
+                        explanation = "Needed for temporary caching on the file system during rendering.")
+        }
+)
 @SideEffectFree
 @EventDriven
 @Tags({"tiff", "pdf", "converter"})
